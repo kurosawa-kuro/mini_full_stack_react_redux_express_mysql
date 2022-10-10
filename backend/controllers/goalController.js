@@ -1,6 +1,6 @@
 const asyncHandler = require('express-async-handler')
 
-const Goal = require('../models/goal')
+const Goal = require('../models/goalModel')
 
 // @desc    Get goals
 // @route   GET /api/goals
@@ -15,8 +15,9 @@ const getGoals = asyncHandler(async (req, res) => {
 // @route   POST /api/goals
 const setGoal = asyncHandler(async (req, res) => {
     console.log("setGoal")
-    const { text } = req.body
-    const inputData = { text }
+    const inputData = {
+        text: req.body.text
+    }
 
     if (!inputData.text) {
         res.status(400)
@@ -25,7 +26,7 @@ const setGoal = asyncHandler(async (req, res) => {
 
     const resData = await Goal.create(inputData)
 
-    console.log({ resData })
+    // console.log({ resData })
 
     res.status(200).json(resData)
 })
@@ -34,8 +35,9 @@ const setGoal = asyncHandler(async (req, res) => {
 // @route   PUT /api/goals/:id
 const updateGoal = asyncHandler(async (req, res) => {
     const id = req.params.id;
-    const { text } = req.body
-    const inputData = { text }
+    const inputData = {
+        text: req.body.text
+    }
 
     const goal = await Goal.findByPk(id);
 
