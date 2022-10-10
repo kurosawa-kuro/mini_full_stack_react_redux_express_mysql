@@ -3,6 +3,7 @@ const express = require('express');
 const colors = require('colors');
 const dotenv = require('dotenv').config();
 const morgan = require("morgan");
+const printRoutes = require("express-list-endpoints");
 const { errorHandler } = require('./middleware/errorMiddleware');
 
 const port = process.env.PORT || 5000;
@@ -32,4 +33,7 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use(errorHandler);
 
-app.listen(port, () => console.log(`Server started on port ${port}`));
+app.listen(port, () => {
+    console.log(`Server started on port ${port}`)
+    console.log(printRoutes(app));
+});
